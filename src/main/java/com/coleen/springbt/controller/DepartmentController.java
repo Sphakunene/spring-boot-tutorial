@@ -1,6 +1,7 @@
 package com.coleen.springbt.controller;
 
 import com.coleen.springbt.entity.Department;
+import com.coleen.springbt.errorhandling.DepartmentNotFoundException;
 import com.coleen.springbt.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class DepartmentController {
         return departmentService.getAllDepartments();
     }
     @GetMapping("/departments/{id}")
-    public Department getDepartmentById(@PathVariable("id") Long id ){
+    public Department getDepartmentById(@PathVariable("id") Long id ) throws DepartmentNotFoundException {
         return  departmentService.findDepartmentById(id);
     }
 

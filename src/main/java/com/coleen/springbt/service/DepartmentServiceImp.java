@@ -1,6 +1,7 @@
 package com.coleen.springbt.service;
 
 import com.coleen.springbt.entity.Department;
+import com.coleen.springbt.errorhandling.DepartmentNotFoundException;
 import com.coleen.springbt.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,14 @@ public class DepartmentServiceImp implements DepartmentService{
     }
 
     @Override
-    public Department findDepartmentById(Long id) {
-        return departmentRepository.findById(id).orElseThrow();
+    public Department findDepartmentById(Long id) throws DepartmentNotFoundException {
+        Optional<Department> departmentExist = departmentRepository.findById(id);
+        if(!departmentExist.isPresent()){
+           throw new DepartmentNotFoundException("Department not available");
+        }
+        else {
+            return  departmentExist.get();
+        }
     }
 
     @Override
